@@ -14,7 +14,11 @@ class CsvtoArray
         $data = [];
         if (($handle = fopen($filename, 'r')) !== false) {
             while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
-                $data[] = array_combine($header, $row);
+                if (count($row) === count($header)) {
+                    $data[] = array_combine($header, $row);
+                } else {
+                    continue;
+                }
             }
             fclose($handle);
         }
